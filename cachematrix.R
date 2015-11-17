@@ -12,8 +12,6 @@ testm <- matrix(sample.int(100, 5*5, TRUE), 5, 5)
 
 makeCacheMatrix <- function(original = matrix()) {
 # Take matrix arguemnt and load to global memory
- # m1 <<- x
-#  m1inverse <<- solve(x)
 
   inverseMatrix <- NULL
   set <- function(original) {
@@ -36,14 +34,8 @@ makeCacheMatrix <- function(original = matrix()) {
 
 ## Write a short comment describing this function
 
-cacheSolve <- function(x, ...) {
+cacheSolve <- function(origMat, ...) {
         ## Return a matrix that is the inverse of 'x'
-#   if(x==m1){
-#      output <- m1inverse
-#   }  else
-#   { output <- solve(x)}
-#   return(output)
-
 
 #   m <- x$getmean()
 #   if(!is.null(m)) {
@@ -59,13 +51,13 @@ cacheSolve <- function(x, ...) {
   if (!is.null(invMat)) {
     message("getting cached data")
     return(invMat)
-  }
+  } else {
   originalMatrix <- test$get()
   invMat <- solve(originalMatrix)
   test$setInverse(invMat)
 
-  invMat
-
+  return(invMat)
+  }
 }
 
 

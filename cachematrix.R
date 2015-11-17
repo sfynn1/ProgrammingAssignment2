@@ -19,18 +19,19 @@
 ## --------- BEGIN:  TEST FUNCTION ---------- ##
 ## The following can be uncommented and executed to test the functions
 #
-# testm <- matrix(sample.int(100, 5*5, TRUE), 5, 5)     # generate a random matrix
+# goodM <- matrix(sample.int(100, 5*5, TRUE), 5, 5)     # generate a random matrix
 # errM <- matrix( c(2,2,3,6,6,9,1,4,8) ,nrow = 3,ncol = 3)    # explicit singular matrix
-# test <- makeCacheMatrix(testm)
-# errM <- makeCacheMatrix(testm)
-# test$get()
-# errM$get()
-# test$getInverse()
-# errM$getInverse()
-# cacheSolve(test)
-# cacheSolve(test)
-# test$getInverse()
-# cacheSolve(errM)
+# checkM <- makeCacheMatrix(goodM)
+# checkERR <- makeCacheMatrix(errM)
+# checkM$get()
+# checkERR$get()
+# checkM$getInverse()
+# checkERR$getInverse()
+# cacheSolve(checkM)
+# checkM$getInverse()
+# cacheSolve(checkM)
+# cacheSolve(checkM)  # hits cached object
+# cacheSolve(checkERR)  # throw error
 #
 ## --------- END:  TEST FUNCTION ---------- ##
 
@@ -66,7 +67,7 @@ makeCacheMatrix <- function(original = matrix()) {
 #
 cacheSolve <- function(origMat, ...) {
 
-    invMat <- test$getInverse()
+    invMat <- origMat$getInverse()
 
         if ( !is.null(invMat) )
             {
@@ -76,7 +77,7 @@ cacheSolve <- function(origMat, ...) {
              }
         else
              {
-              originalMatrix <- test$get()
+              originalMatrix <- origMat$get()
                  # OPTIONAL FEATURE ONLY - Learning R #
                   errorString <- NULL
 
@@ -86,7 +87,7 @@ cacheSolve <- function(origMat, ...) {
                          stop ("Possible singular matrix error - Please try a different matrix!")
 
                   invMat <- solve(originalMatrix)
-                  test$setInverse(invMat)
+                  origMat$setInverse(invMat)
 
               return(invMat)
              }

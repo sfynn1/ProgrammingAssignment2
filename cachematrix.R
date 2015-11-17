@@ -63,3 +63,14 @@ cacheSolve <- function(origMat, ...) {
 
 ## References USED:
 #  https://cran.r-project.org/doc/manuals/R-intro.html#DOCF23  Open.Account example
+
+
+#  http://stackoverflow.com/questions/24961983/how-to-check-if-a-matrix-has-an-inverse-in-the-r-language
+errM <- matrix( c(2,2,3,6,6,9,1,4,8) ,nrow = 3,ncol = 3) #explicit singular matrix
+
+out <- tryCatch(solve(errM) %*% errM, error = function(e) e)  #capture any error
+any(class(out) == "error")  #test for error
+
+
+
+
